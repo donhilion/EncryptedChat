@@ -7,6 +7,8 @@ from threading import Lock
 
 BUFFER_SIZE = 1024
 
+# TODO: map for id -> msg
+
 class TCPConnection(object):
 	''' A low level TCP connection.
 
@@ -25,6 +27,7 @@ class TCPConnection(object):
 		
 		self._buffer = []
 
+	# TCP
 	def configure(self, server = None, port = None):
 		''' Configures the connection.
 
@@ -51,3 +54,28 @@ class TCPConnection(object):
 		''' Closes the connection.
 		'''
 		self._socket.close()
+		
+	# Messages
+	def send(self, msg):
+		self._socket.send(msg)
+	
+	def receive(self):
+		self._lock.acquire()
+		copy = self._buffer[:]
+		self._buffer = []
+		self._lock.release()
+		return copy
+	
+	def _listen(self):
+		while self._is_receiving:
+			data = self._socket.recv(BUFFER_SIZE)
+			self._lock.acquire()
+			self._buffer.append(data)
+			self._lock.release()
+	
+	# Listener
+	def _start_listener(self):
+		pass
+	
+	def _stop_listener(self):
+		pass
