@@ -1,0 +1,9 @@
+Message 	-> id + ":" + Msg + "\n"
+Msg 		-> Plain | Encrypted
+Plain 		-> "plain:" + PMsg
+PMsg		-> "getServerKey"
+Encrypted 	-> "encrypted:" + EMsg
+
+Get server RSA-Key:
+	Client: id + "plain:getServerKey\n"
+	Server: id + publicRsaKey + "\n"
