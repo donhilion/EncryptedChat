@@ -7,8 +7,6 @@ from threading import Lock
 
 BUFFER_SIZE = 1024
 
-# TODO: map for id -> msg
-
 class TCPConnection(object):
 	''' A low level TCP connection.
 
