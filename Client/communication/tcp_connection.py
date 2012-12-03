@@ -24,6 +24,15 @@ class TCPConnection(object):
 		self._lock = Lock()
 		
 		self._buffer = []
+		self._connected = False
+
+	def is_connected(self):
+		''' Determines if this connection is open.
+
+		Returns:
+			True if this connection is open.
+		'''
+		return self._connected
 
 	# TCP
 	def configure(self, server = None, port = None):
@@ -45,6 +54,7 @@ class TCPConnection(object):
 		'''
 		if self._server is not None and self._server_port is not None:
 			self._socket.connect((self._server, self._server_port))
+			self._connected = True
 			return True
 		return False
 		
@@ -52,10 +62,11 @@ class TCPConnection(object):
 		''' Closes the connection.
 		'''
 		self._socket.close()
+		self._connected = False
 		
 	# Messages
 	def send(self, msg):
-		self._socket.send(msg)
+		self._socket.sendall(msg)
 	
 	def receive(self):
 		self._lock.acquire()
