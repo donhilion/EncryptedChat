@@ -1,9 +1,11 @@
-Message 	-> id + ":" + Msg + "\n"
+Messages in JSON format.
+
+Message 	-> '{ id :' + id + ', ' + Msg + ' }' 
 Msg 		-> Plain | Encrypted
-Plain 		-> "plain:" + PMsg
-PMsg		-> "getServerKey"
-Encrypted 	-> "encrypted:" + EMsg
+Plain 		-> 'encoded : false, msg : "' + PMsg + '"'
+PMsg		-> 'getServerKey'
+Encrypted 	-> 'encoded : true, msg : "' + EMsg + '"'
 
 Get server RSA-Key:
-	Client: id + "plain:getServerKey\n"
-	Server: id + publicRsaKey + "\n"
+	Client: '{ id : ' + id + ', encoded : false, msg : "getServerKey" }'
+	Server: '{ id : ' + id + ', encoded : false, msg : "' + base64(publicKey) + '" }'
