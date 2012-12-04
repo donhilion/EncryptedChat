@@ -43,3 +43,27 @@ class Message(object):
 		# TODO: check encoded
 		tree = { 'id':self._id, 'encoded':self._encoded, 'msg':self._msg }
 		return json.dumps(tree)
+
+	def is_encoded(self):
+		''' Returns True if this message is encoded.
+
+		Returns:
+			True if this message is encoded.
+		'''
+		return self._encoded
+
+	def get_id(self):
+		''' Returns the id of this message.
+
+		Returns:
+			The id of this message.
+		'''
+		return self._id
+
+	def get_msg(self):
+		''' Returns the message.
+
+		Returns:
+			The message.
+		'''
+		return self._msg

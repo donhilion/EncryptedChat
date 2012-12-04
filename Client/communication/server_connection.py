@@ -6,7 +6,7 @@ from tcp_connection import TCPConnection
 from message import Message
 import logging
 
-MSG_GET_SERVER_KEY = 'plain:getServerKey\n'
+MSG_GET_SERVER_KEY = 'plain:getServerKey'
 
 class ServerConnection(object):
 	''' A high level connection with the server.
@@ -39,11 +39,12 @@ class ServerConnection(object):
 		return None
 
 	def poll_for_msgs(self):
+		''' Polls for new messages.
+		'''
 		msgs = self._tcp_connection.receive()
 		for msg in msgs:
 			try:
-				divivder = msg.index(':')
-				msg_id = msg[:divivder]
-				self._id_to_respond[msg_id] = msg[divivder+1:]
+				parsed = Message(json_string=msg)
+				self._id_to_respond[parsed.get_id()] = parsed
 			except Exception:
 				logging.error('Returned message in unknown format: ' + str(msg))
