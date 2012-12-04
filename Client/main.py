@@ -2,5 +2,8 @@
 The start point of the client.
 '''
 
+from gui.window import Window
+
 if __name__ == '__main__':
-	pass
+	window = Window()
+	window.mainloop()
