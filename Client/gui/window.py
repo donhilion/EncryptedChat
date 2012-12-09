@@ -3,6 +3,7 @@
 '''
 
 import Tkinter
+import tabs
 
 class Window(Tkinter.Tk):
 	''' The main window class.
@@ -13,6 +14,10 @@ class Window(Tkinter.Tk):
 		_parent: The parent of this window.
 		_menu: The menu container.
 		_file_menu: The 'File' menu.
+		_tabs: The tab bar of this window.
+		_log: The log tab.
+		_log_scroll: The scrollbar of the log view.
+		_log_text: The text field of the log view.
 	'''
 	def __init__(self, parent=None):
 		''' The constructor.
@@ -30,7 +35,16 @@ class Window(Tkinter.Tk):
 		self._file_menu.add_command(label='Exit', command=self._exit)
 
 		# building content
-		self.grid()
+		self._tabs = tabs.TabBar(self)
+
+		self._log = tabs.Tab(self, 'Log')
+		self._log_scroll = Tkinter.Scrollbar(self._log)
+		self._log_scroll.pack(side=Tkinter.RIGHT, fill=Tkinter.Y)
+		self._log_text = Tkinter.Text(self._log, yscrollcommand=self._log_scroll)
+		self._log_text.pack(side=Tkinter.LEFT, fill=Tkinter.BOTH)
+		self._tabs.add(self._log)
+
+		self._tabs.show()
 
 	def _exit(self):
 		''' Closes this window.
