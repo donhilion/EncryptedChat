@@ -5,6 +5,7 @@
 import Tkinter
 import tabs
 from log import Log
+from contacts import Contacts
 
 class Window(Tkinter.Tk):
 	''' The main window class.
@@ -38,6 +39,9 @@ class Window(Tkinter.Tk):
 
 		self._log = Log(self)
 		self._tabs.add(self._log)
+
+		self._contacts = Contacts(self)
+		self._tabs.add(self._contacts)
 
 		self._tabs.show()
 
