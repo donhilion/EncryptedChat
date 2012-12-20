@@ -31,8 +31,8 @@ class ServerConnection(object):
 		if self._tcp_connection is None or \
 			not self._tcp_connection.is_connected:
 			return None
-		send_msg = Message(id=self._next_id, encoded=False, \
-			msg=MSG_GET_SERVER_KEY)
+		send_msg = Message(msg_id=self._next_id, encoded=False,
+                           msg=MSG_GET_SERVER_KEY)
 		self._next_id += 1
 
 		self._tcp_connection.send(send_msg.get_json_string())
