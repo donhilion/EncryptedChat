@@ -3,20 +3,20 @@
 '''
 
 import Tkinter
-from tabs import Tab
 
-class Contacts(Tab):
+class Contacts(Tkinter.Frame):
 	''' The contacts tab.
 
 	This class represents the contacts tab.
 
 	Attributes:
 		_all_contacts: The complete list of contacts.
+		_search_field: The text field for filtering the contacts.
 		_contacts_scroll: The scrollbar of the contacts view.
 		_contacts_list: The list of contacts.
 	'''
-	def __init__(self, master, name='Contacts'):
-		Tab.__init__(self, master, name)
+	def __init__(self, master):
+		Tkinter.Frame.__init__(self, master)
 		self._all_contacts = []
 		# gui
 		self._search_field = Tkinter.Entry(self)
@@ -27,7 +27,6 @@ class Contacts(Tab):
 		self._contacts_list.pack(side=Tkinter.LEFT, fill=Tkinter.BOTH)
 		self._contacts_scroll.config(command=self._contacts_list.yview)
 		self._search_field.bind("<KeyRelease>", self.search_handler)
-		#self._search_field.insert(Tkinter.END, 'Blub!')
 
 
 	def load_list(self, contact_list):

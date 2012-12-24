@@ -3,9 +3,9 @@
 '''
 
 import Tkinter
-import tabs
-from log import Log
 from contacts import Contacts
+from notebook import notebook
+from log import Log
 
 class Window(Tkinter.Tk):
 	''' The main window class.
@@ -16,8 +16,9 @@ class Window(Tkinter.Tk):
 		_parent: The parent of this window.
 		_menu: The menu container.
 		_file_menu: The 'File' menu.
-		_tabs: The tab bar of this window.
+		_notebook: The notebook containing the tabs.
 		_log: The log tab.
+		_contacts: The contacts tab.
 	'''
 	def __init__(self, parent=None):
 		''' The constructor.
@@ -35,15 +36,13 @@ class Window(Tkinter.Tk):
 		self._file_menu.add_command(label='Exit', command=self._exit)
 
 		# building content
-		self._tabs = tabs.TabBar(self)
+		self._notebook = notebook(self, Tkinter.TOP)
 
-		self._log = Log(self)
-		self._tabs.add(self._log)
+		self._log = Log(self._notebook())
+		self._notebook.add_screen(self._log, "Log")
 
-		self._contacts = Contacts(self)
-		self._tabs.add(self._contacts)
-
-		self._tabs.show()
+		self._contacts = Contacts(self._notebook())
+		self._notebook.add_screen(self._contacts, "Contacts")
 
 	def _exit(self):
 		''' Closes this window.
