@@ -26,6 +26,7 @@ class Contacts(Tab):
 		self._contacts_list = Tkinter.Listbox(self, yscrollcommand=self._contacts_scroll.set)
 		self._contacts_list.pack(side=Tkinter.LEFT, fill=Tkinter.BOTH)
 		self._contacts_scroll.config(command=self._contacts_list.yview)
+		self._search_field.bind("<KeyRelease>", self.search_handler)
 		#self._search_field.insert(Tkinter.END, 'Blub!')
 
 
@@ -42,6 +43,15 @@ class Contacts(Tab):
 		''' Refreshes the displayed list.
 		'''
 		self._contacts_list.delete(0,Tkinter.END)
-		# TODO filter
+		search_string = self._search_field.get().lower()
 		for contact in self._all_contacts:
-			self._contacts_list.insert(Tkinter.END, contact)
+			if search_string in contact.lower():
+				self._contacts_list.insert(Tkinter.END, contact)
+
+	def search_handler(self, object):
+		''' The event handler for key releases in the search field.
+
+		Args:
+			object: The event object.
+		'''
+		self.refresh_list()
